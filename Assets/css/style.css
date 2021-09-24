@@ -1,0 +1,88 @@
+:root {
+    --firstdark: darkblue;
+    --seconddark: purple;
+    --light: white;
+}
+
+* {
+    font-family: Arial, Helvetica, sans-serif;
+}
+
+html {
+    font-size: 62.5%;
+}
+
+body {
+    font-size: 1.75rem;
+}
+
+h1 {
+    font-size: 4rem;
+}
+
+h2 {
+    font-size: 3rem;
+}
+
+h3 {
+    font-size: 2.5rem;
+}
+
+header {
+    margin: .5rem .5rem .5rem;
+    padding: .5rem .5rem .5rem;
+    display: flex;
+    flex: 1 0;
+    justify-content: space-between;
+}
+
+.container {
+    display: flex;
+    flex-direction: column;
+    flex: 1 0 75%;
+    width: 50%;
+    margin: 2rem auto;
+}
+
+.quest {
+    margin-bottom: 2rem;
+    text-align: center;
+}
+
+.instruct {
+    text-align: center;
+    margin-bottom: 5rem;
+}
+
+.btns2 {
+    display: flex;
+    justify-content: space-evenly;
+}
+
+.btns {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-evenly;
+}
+
+.btn {
+    width: 25%;
+    margin: 1rem;
+    border-radius: 8px;
+    height: 5rem;
+    text-align: left;
+    padding-left: 1rem;
+    color: var(--light);
+    background: linear-gradient(90deg, var(--firstdark), var(--seconddark), var(--firstdark));
+}
+
+.startbtn {
+    width: 25%;
+    margin: 1rem;
+    border-radius: 8px;
+    height: 5rem;
+    text-align: left;
+    padding-left: 1rem;
+    color: var(--light);
+    background: linear-gradient(90deg, var(--firstdark), var(--seconddark), var(--firstdark));
+}
