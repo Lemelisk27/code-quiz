@@ -1,3 +1,4 @@
+// Sets variables
 var timeEl = document.querySelector(".time");
 var questEl = document.querySelector(".quest");
 var instructEl = document.querySelector(".instruct");
@@ -11,6 +12,15 @@ var buttonEl4 = document.createElement("button")
 var questionOne = "How many miliseconds are in a day?"
 var answerOne = ["86,400,000", "60,000", "2", "1,000,000,000"]
 
+// Makes the answers random
+for (let i = answerOne.length -1; i > 0; i--) {
+    let j = Math.floor(Math.random() * i)
+    let k = answerOne[i]
+    answerOne[i] = answerOne[j]
+    answerOne[j] = k
+}
+
+// creates the buttons needed for the quiz
 function btncre() {
     buttonEl1.setAttribute("style", "width: 25%; margin: 1rem; border-radius: 8px; height: 5rem; padding-left: 1rem; color: var(--light); background: linear-gradient(90deg, var(--firstdark), var(--seconddark), var(--firstdark))")
     buttonEl1.setAttribute("data-state", "1")
@@ -32,8 +42,13 @@ function btncre() {
     buttonEl1.setAttribute("data-number", "4")
     buttonEl4.setAttribute("class", "btn")
     buttonEl4.textContent = "Button 4"
+    btnsEl.append(buttonEl1)
+    btnsEl.append(buttonEl2)
+    btnsEl.append(buttonEl3)
+    btnsEl.append(buttonEl4)
 }
 
+// Timer function
 function setTime () {
     var timerInterval = setInterval(function () {
         secondsLeft--;
@@ -45,22 +60,12 @@ function setTime () {
 }
 
 buttonEl.addEventListener("click",
-function quiz() {
+function first() {
     setTime()
     instructEl.textContent = ""
     buttonEl.remove()
     btncre()
-    btnsEl.append(buttonEl1)
-    btnsEl.append(buttonEl2)
-    btnsEl.append(buttonEl3)
-    btnsEl.append(buttonEl4)
     questEl.textContent = questionOne
-    for (let i = answerOne.length -1; i > 0; i--) {
-        let j = Math.floor(Math.random() * i)
-        let k = answerOne[i]
-        answerOne[i] = answerOne[j]
-        answerOne[j] = k
-    }
     buttonEl1.textContent = answerOne[0]
     buttonEl2.textContent = answerOne[1]
     buttonEl3.textContent = answerOne[2]
