@@ -4,21 +4,24 @@ var questEl = document.querySelector(".quest");
 var instructEl = document.querySelector(".instruct");
 var btnsEl = document.querySelector(".btns")
 var secondsLeft = 75;
-var buttonEl = document.querySelector(".startbtn")
+var stbtn = document.querySelector(".start")
 var buttonEl1 = document.createElement("button")
 var buttonEl2 = document.createElement("button")
 var buttonEl3 = document.createElement("button")
 var buttonEl4 = document.createElement("button")
+var submitbtn = document.createElement("button")
+var response = document.querySelector(".response")
+var newBtn = document.querySelector(".newBtn")
+var score = 0
+var isWon = false
 var questionOne = "How many miliseconds are in a day?"
 var answerOne = ["86,400,000", "60,000", "2", "1,000,000,000"]
-
-// Makes the answers random
-for (let i = answerOne.length -1; i > 0; i--) {
-    let j = Math.floor(Math.random() * i)
-    let k = answerOne[i]
-    answerOne[i] = answerOne[j]
-    answerOne[j] = k
-}
+var questionTwo = "What is the command to upload changes to GitHub?"
+var answerTwo = ["git push", "git pull", "git commit", "get add"]
+var questionThree = "What is NOT an example of a semantic element in HTML?"
+var answerThree = ["div", "figcaption", "nav", "time"]
+var questionFour = "In Javascript, the correct way to inclose data in a string is with:"
+var answerFour = ["Quotation Marks", "Parentheses", "Curly Brackets", "Square Brackets"]
 
 // creates the buttons needed for the quiz
 function btncre() {
@@ -53,25 +56,176 @@ function setTime () {
     var timerInterval = setInterval(function () {
         secondsLeft--;
         timeEl.textContent = "Timer: " + secondsLeft;
+        if(secondsLeft >= 0) {
+            if(isWon && secondsLeft > 0) {
+                clearInterval(timerInterval)
+            }
+        }
         if(secondsLeft === 0) {
             clearInterval(timerInterval);
+            lost()
         }
     }, 1000)
 }
 
-buttonEl.addEventListener("click",
-function first() {
+// Starts the quiz
+stbtn.addEventListener("click",
+function first(event) {
+    event.preventDefault()
     setTime()
     instructEl.textContent = ""
-    buttonEl.remove()
+    stbtn.remove()
     btncre()
+    for (let i = answerOne.length -1; i > 0; i--) {
+        let j = Math.floor(Math.random() * i)
+        let k = answerOne[i]
+        answerOne[i] = answerOne[j]
+        answerOne[j] = k
+    }
     questEl.textContent = questionOne
     buttonEl1.textContent = answerOne[0]
     buttonEl2.textContent = answerOne[1]
     buttonEl3.textContent = answerOne[2]
     buttonEl4.textContent = answerOne[3]
-    console.log(answerOne)
+    ans1()
 })
 
-// buttonEl.addEventListener("click", quiz())
+var buttonEl = document.getElementsByClassName("btns");
 
+//Sets the eventListener for the first answer
+function ans1 () {
+    buttonEl[0].addEventListener("click", function ans1b(event) {
+        event.preventDefault()
+        if (event.target.innerHTML === "86,400,000" && event.target.dataset.state === "1") {
+            response.textContent = "Correct"
+            second()
+        }
+        else if (event.target.innerHTML !== "86,400,000" && event.target.dataset.state === "1") {
+            response.textContent = "Wrong"
+            if (secondsLeft > 15) {
+                secondsLeft = secondsLeft - 15
+                second()
+            }
+            else {
+                lost()
+            }
+        }
+        else if (event.target.innerHTML === "git push" && event.target.dataset.state === "2") {
+            response.textContent = "Correct"
+            third()
+        }
+        else if (event.target.innerHTML !== "git push" && event.target.dataset.state === "2") {
+            response.textContent = "Wrong"
+            if (secondsLeft > 15) {
+                secondsLeft = secondsLeft - 15
+                third()
+            }
+            else {
+                lost()
+            }
+        }
+        else if (event.target.innerHTML === "div" && event.target.dataset.state === "3") {
+            response.textContent = "Correct"
+            forth()
+        }
+        else if (event.target.innerHTML !== "div" && event.target.dataset.state === "3") {
+            response.textContent = "Wrong"
+            if (secondsLeft > 15) {
+                secondsLeft = secondsLeft - 15
+                forth()              
+            }
+            else {
+                lost()
+            }
+        }
+        else if (event.target.innerHTML === "Quotation Marks" && event.target.dataset.state === "4") {
+            response.textContent = "Correct"
+            won()
+        }
+        else {
+            if (secondsLeft > 15) {
+                secondsLeft = secondsLeft - 15
+                won()              
+            }
+            else {
+                lost()
+            }
+        }
+    });
+}
+
+function second() {
+    for (let i = answerTwo.length -1; i > 0; i--) {
+        let j = Math.floor(Math.random() * i)
+        let k = answerTwo[i]
+        answerTwo[i] = answerTwo[j]
+        answerTwo[j] = k
+    }
+    questEl.textContent = questionTwo
+    buttonEl1.textContent = answerTwo[0]
+    buttonEl2.textContent = answerTwo[1]
+    buttonEl3.textContent = answerTwo[2]
+    buttonEl4.textContent = answerTwo[3]
+    buttonEl1.setAttribute("data-state", "2")
+    buttonEl2.setAttribute("data-state", "2")
+    buttonEl3.setAttribute("data-state", "2")
+    buttonEl4.setAttribute("data-state", "2")
+}
+
+function third() {
+    for (let i = answerThree.length -1; i > 0; i--) {
+        let j = Math.floor(Math.random() * i)
+        let k = answerThree[i]
+        answerThree[i] = answerThree[j]
+        answerThree[j] = k
+    }
+    questEl.textContent = questionThree
+    buttonEl1.textContent = answerThree[0]
+    buttonEl2.textContent = answerThree[1]
+    buttonEl3.textContent = answerThree[2]
+    buttonEl4.textContent = answerThree[3]
+    buttonEl1.setAttribute("data-state", "3")
+    buttonEl2.setAttribute("data-state", "3")
+    buttonEl3.setAttribute("data-state", "3")
+    buttonEl4.setAttribute("data-state", "3")
+}
+
+function forth() {
+    for (let i = answerFour.length -1; i > 0; i--) {
+        let j = Math.floor(Math.random() * i)
+        let k = answerFour[i]
+        answerFour[i] = answerFour[j]
+        answerFour[j] = k
+    }
+    questEl.textContent = questionFour
+    buttonEl1.textContent = answerFour[0]
+    buttonEl2.textContent = answerFour[1]
+    buttonEl3.textContent = answerFour[2]
+    buttonEl4.textContent = answerFour[3]
+    buttonEl1.setAttribute("data-state", "4")
+    buttonEl2.setAttribute("data-state", "4")
+    buttonEl3.setAttribute("data-state", "4")
+    buttonEl4.setAttribute("data-state", "4")
+}
+
+function lost () {
+    questEl.textContent = "You have lost, the game is over."
+    response.textContent = ""
+    buttonEl1.remove()
+    buttonEl2.remove()
+    buttonEl3.remove()
+    buttonEl4.remove()
+}
+
+function won () {
+    score = secondsLeft
+    isWon = true
+    questEl.textContent = "You have won! Your score is: " + score + "!"
+    response.textContent = "Please enter your name."
+    buttonEl1.remove()
+    buttonEl2.remove()
+    buttonEl3.remove()
+    buttonEl4.remove()
+    newBtn.append(submitbtn)
+    submitbtn.textContent = "Submit"
+}

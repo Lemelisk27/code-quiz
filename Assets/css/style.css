@@ -76,7 +76,7 @@ header {
     background: linear-gradient(90deg, var(--firstdark), var(--seconddark), var(--firstdark));
 }
 
-.startbtn {
+.start {
     width: 25%;
     margin: 1rem;
     border-radius: 8px;
@@ -85,4 +85,8 @@ header {
     padding-left: 1rem;
     color: var(--light);
     background: linear-gradient(90deg, var(--firstdark), var(--seconddark), var(--firstdark));
+}
+
+.response {
+    margin: 2rem;
 }

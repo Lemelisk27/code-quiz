@@ -5,7 +5,9 @@
 * When the timer is 0 or all the questions are answered the game is over.
 * The user is shown their score and given the chance to save their high score.
 
-            <button class = "btn" data-number="1" data-state="show">Button 1</button>
-            <button class = "btn" data-number="2" data-state="show">Button 2</button>
-            <button class = "btn" data-number="3" data-state="show">Button 3</button>
-            <button class = "btn" data-number="4" data-state="show">Button 4</button>
+    btns = document.getElementsByClassName("saveBtn");
+    for (var i = 0; i < btns.length; i++) {
+        btns[i].addEventListener("click", function () {
+			//Add function here
+        });
+    }
