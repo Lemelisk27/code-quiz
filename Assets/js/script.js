@@ -3,13 +3,16 @@ var timeEl = document.querySelector(".time");
 var questEl = document.querySelector(".quest");
 var instructEl = document.querySelector(".instruct");
 var btnsEl = document.querySelector(".btns")
+var scoreList = document.querySelector("#score-list")
 var secondsLeft = 75;
 var stbtn = document.querySelector(".start")
+var hiscoreBtn = document.querySelector(".hiScore")
 var buttonEl1 = document.createElement("button")
 var buttonEl2 = document.createElement("button")
 var buttonEl3 = document.createElement("button")
 var buttonEl4 = document.createElement("button")
 var submitbtn = document.createElement("button")
+var nameInput = document.createElement("input")
 var response = document.querySelector(".response")
 var newBtn = document.querySelector(".newBtn")
 var score = 0
@@ -22,6 +25,22 @@ var questionThree = "What is NOT an example of a semantic element in HTML?"
 var answerThree = ["div", "figcaption", "nav", "time"]
 var questionFour = "In Javascript, the correct way to inclose data in a string is with:"
 var answerFour = ["Quotation Marks", "Parentheses", "Curly Brackets", "Square Brackets"]
+
+var highScores = []
+
+function init() {
+    var storedHighScores = JSON.parse(localStorage.getItem("highScores"))
+    if (storedHighScores !== null) {
+        highScores = storedHighScores
+    }
+}
+
+init()
+
+hiscoreBtn.addEventListener("click", function (event) {
+    event.preventDefault()
+    viewHighScores()
+})
 
 // creates the buttons needed for the quiz
 function btncre() {
@@ -75,6 +94,7 @@ function first(event) {
     setTime()
     instructEl.textContent = ""
     stbtn.remove()
+    hiscoreBtn.textContent = ""
     btncre()
     for (let i = answerOne.length -1; i > 0; i--) {
         let j = Math.floor(Math.random() * i)
@@ -215,17 +235,67 @@ function lost () {
     buttonEl2.remove()
     buttonEl3.remove()
     buttonEl4.remove()
+    var newGame = document.createElement("button")
+    newGame.setAttribute("style", "width: 25%; border-radius: 8px; height: 3.5rem; padding-left: 1rem; color: var(--light); background: linear-gradient(90deg, var(--firstdark), var(--seconddark), var(--firstdark))")
+    newGame.textContent = "Start Over"
+    scoreList.append(newGame)
+    newGame.addEventListener("click", function () {
+        location.reload()
+    })
 }
 
 function won () {
     score = secondsLeft
     isWon = true
     questEl.textContent = "You have won! Your score is: " + score + "!"
-    response.textContent = "Please enter your name."
+    response.textContent = "Please enter your name:"
     buttonEl1.remove()
     buttonEl2.remove()
     buttonEl3.remove()
     buttonEl4.remove()
+    newBtn.append(nameInput)
+    nameInput.setAttribute("type", "text")
+    nameInput.setAttribute("id", "name-text")
+    nameInput.setAttribute("style", "height: 3rem; margin: auto")
     newBtn.append(submitbtn)
+    submitbtn.setAttribute("style", "width: 15%; margin: auto; border-radius: 8px; height: 3.5rem; padding-left: 1rem; color: var(--light); background: linear-gradient(90deg, var(--firstdark), var(--seconddark), var(--firstdark))")
     submitbtn.textContent = "Submit"
+    console.log(nameInput.value)
+    submitbtn.addEventListener("click", function () {
+        highScores.push("Name: " + nameInput.value + " - " + score )
+        localStorage.setItem("highScores", JSON.stringify(highScores))
+        location.reload()
+    })
+}
+
+function viewHighScores () {
+    instructEl.textContent = ""
+    questEl.textContent = "Highscores!"
+    stbtn.remove()
+    for (let i = 0; i < highScores.length; i++) {
+        var newScores = highScores[i];
+        
+        var li = document.createElement("li");
+        li.textContent = newScores;
+        li.setAttribute("data-index", i);
+        li.setAttribute("style", "margin: 1rem");
+        scoreList.append(li);
+    }
+    var resetBtn = document.createElement("button")
+    resetBtn.setAttribute("style", "width: 25%; border-radius: 8px; height: 3.5rem; padding-left: 1rem; color: var(--light); background: linear-gradient(90deg, var(--firstdark), var(--seconddark), var(--firstdark))")
+    resetBtn.textContent = "Reset Scores"
+    var newGame = document.createElement("button")
+    newGame.setAttribute("style", "width: 25%; border-radius: 8px; height: 3.5rem; padding-left: 1rem; color: var(--light); background: linear-gradient(90deg, var(--firstdark), var(--seconddark), var(--firstdark))")
+    newGame.textContent = "Go Back"
+    scoreList.append(resetBtn)
+    scoreList.append(newGame)
+    resetBtn.addEventListener("click", function () {
+        storedHighScores = null
+        highScores = null
+        localStorage.setItem("highScores", JSON.stringify(highScores))
+        location.reload()
+    })
+    newGame.addEventListener("click", function () {
+        location.reload()
+    })
 }
