@@ -28,6 +28,7 @@ var answerFour = ["Quotation Marks", "Parentheses", "Curly Brackets", "Square Br
 
 var highScores = []
 
+// gets the scores from local storage
 function init() {
     var storedHighScores = JSON.parse(localStorage.getItem("highScores"))
     if (storedHighScores !== null) {
@@ -35,8 +36,10 @@ function init() {
     }
 }
 
+// runs the high score function
 init()
 
+// adds the event listener for the high scores button
 hiscoreBtn.addEventListener("click", function (event) {
     event.preventDefault()
     viewHighScores()
@@ -174,6 +177,7 @@ function ans1 () {
     });
 }
 
+// second question
 function second() {
     for (let i = answerTwo.length -1; i > 0; i--) {
         let j = Math.floor(Math.random() * i)
@@ -192,6 +196,7 @@ function second() {
     buttonEl4.setAttribute("data-state", "2")
 }
 
+// third question
 function third() {
     for (let i = answerThree.length -1; i > 0; i--) {
         let j = Math.floor(Math.random() * i)
@@ -210,6 +215,7 @@ function third() {
     buttonEl4.setAttribute("data-state", "3")
 }
 
+// forth question
 function forth() {
     for (let i = answerFour.length -1; i > 0; i--) {
         let j = Math.floor(Math.random() * i)
@@ -228,6 +234,7 @@ function forth() {
     buttonEl4.setAttribute("data-state", "4")
 }
 
+// function for if the player loses
 function lost () {
     questEl.textContent = "You have lost, the game is over."
     response.textContent = ""
@@ -244,6 +251,7 @@ function lost () {
     })
 }
 
+// function for if the player wins
 function won () {
     score = secondsLeft
     isWon = true
@@ -268,6 +276,7 @@ function won () {
     })
 }
 
+// function to view high scores
 function viewHighScores () {
     instructEl.textContent = ""
     questEl.textContent = "Highscores!"
